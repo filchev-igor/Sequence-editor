@@ -78,7 +78,10 @@ const SequenceStepsPage = () => {
         </div>
 
         <div className={"text-right"}>
-          <button type={"button"} className={"border border-gray-200 mr-2"}>
+          <button
+            type={"button"}
+            className={"border border-gray-200 sm:mr-2 xs: mb-2"}
+          >
             Previous
           </button>
 

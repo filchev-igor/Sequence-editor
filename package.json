@@ -40,5 +40,12 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.6"
+  },
+  "msw": {
+    "workerDirectory": [
+      "src\\app\\mocks",
+      "src",
+      "public"
+    ]
   }
 }

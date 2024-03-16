@@ -12,13 +12,15 @@ import { useEffect, useState } from "react";
 import { Editor } from "@tiptap/react";
 import type { EmailsRawType } from "../../types/emails.ts";
 import { useNewEmailsUpload } from "../../api/emails/queryHooks.ts";
+import { useNavigate } from "react-router-dom";
+import { PATH_NAMES } from "../../modules/router/routes.ts";
 
 const SequenceStepsPage = () => {
-  usePageTitle("Sequence steps");
-
+  const navigate = useNavigate();
   const { handleNewEmailsUpload } = useNewEmailsUpload();
-
   const initialEditor = useEditorData();
+
+  usePageTitle("Sequence steps");
 
   const [emails, setEmails] = useState<EmailsRawType[]>([
     { id: 0, subject: "", editor: initialEditor },
@@ -41,7 +43,12 @@ const SequenceStepsPage = () => {
         editor: editor?.getJSON(),
       }));
 
-    handleNewEmailsUpload({ data: emailsToSend, onSettled: () => {} });
+    handleNewEmailsUpload({
+      data: emailsToSend,
+      onSettled: () => {
+        navigate(PATH_NAMES.sequenceSummaryPage, { state: { emailsToSend } });
+      },
+    });
   };
 
   useEffect(() => {

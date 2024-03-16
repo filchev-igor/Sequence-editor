@@ -3,7 +3,7 @@ import Stepper from "../../components/Stepper/Stepper.tsx";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs.tsx";
 import { SEQUENCE_BREADCRUMBS } from "../../constants/breadcrumbs.ts";
 import PageTitle from "../../components/PageTitle/PageTitle.tsx";
-import { sequenceStepperSteps } from "./constants.ts";
+import { sequenceStepsPageStepper } from "./constants.ts";
 import AddNewStepsButton from "./AddNewStepsButton.tsx";
 import EmailBlock from "./EmailBlock.tsx";
 import useEditorData from "../../utils/usePageTitle/useEditorData.ts";
@@ -67,7 +67,7 @@ const SequenceStepsPage = () => {
 
       <PageTitle title={"New sequence"} />
 
-      <Stepper steps={sequenceStepperSteps} />
+      <Stepper steps={sequenceStepsPageStepper} />
 
       <div className={"grid grid-cols-2"}>
         <div className={"grid"}>
@@ -78,7 +78,10 @@ const SequenceStepsPage = () => {
         </div>
 
         <div className={"text-right"}>
-          <button type={"button"} className={"border border-gray-200 mr-2"}>
+          <button
+            type={"button"}
+            className={"border border-gray-200 sm:mr-2 xs: mb-2"}
+          >
             Previous
           </button>
 
@@ -95,15 +98,12 @@ const SequenceStepsPage = () => {
       <hr className={"my-4"} />
 
       {emails.map(({ id, subject, editor }) => {
-        const handleSubjectChange = (newSubject: string) => {
-          const updatedEmailsSubject = [
-            ...emails,
-            {
-              id,
-              subject: newSubject,
-              editor,
-            },
-          ];
+        const handleSubjectChange = (itemId: number, newSubject: string) => {
+          const updatedEmailsSubject = emails.map((value) => ({
+            id: value.id,
+            subject: value.id === itemId ? newSubject : value.subject,
+            editor: value.editor,
+          }));
 
           setEmails(updatedEmailsSubject);
         };
@@ -112,7 +112,9 @@ const SequenceStepsPage = () => {
           <EmailBlock
             key={id}
             subject={subject}
-            onSubjectChange={handleSubjectChange}
+            onSubjectChange={(updatedSubject: string) =>
+              handleSubjectChange(id, updatedSubject)
+            }
           >
             {editor ? <EmailEditor editor={editor} /> : <></>}
           </EmailBlock>

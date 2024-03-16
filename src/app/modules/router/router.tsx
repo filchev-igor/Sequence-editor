@@ -5,9 +5,12 @@ import SequenceSummaryPage from "../../pages/SequenceSummaryPage/SequenceSummary
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <SequenceStepsPage />,
+    path: PATH_NAMES.sequenceStepsPage,
     children: [
+      {
+        element: <SequenceStepsPage />,
+        index: true,
+      },
       {
         path: PATH_NAMES.sequenceSummaryPage,
         element: <SequenceSummaryPage />,

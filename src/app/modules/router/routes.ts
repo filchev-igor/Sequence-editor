@@ -1,1 +1,4 @@
-export const PATH_NAMES = { sequenceSummaryPage: "sequence-summary" };
+export const PATH_NAMES = {
+  sequenceStepsPage: "/",
+  sequenceSummaryPage: "sequence-summary",
+};

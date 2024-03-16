@@ -9,6 +9,7 @@ import EmailBlock from "./EmailBlock.tsx";
 import useEditorData from "../../utils/usePageTitle/useEditorData.ts";
 import EmailEditor from "./EmailEditor.tsx";
 import { useEffect, useState } from "react";
+import { Editor } from "@tiptap/react";
 
 const SequenceStepsPage = () => {
   usePageTitle("Sequence steps");
@@ -23,10 +24,10 @@ const SequenceStepsPage = () => {
     { id: 0, subject: "", editor: initialEditor },
   ]);
 
-  const handleNewEmailBlockAdd = () => {
+  const handleNewEmailBlockAdd = (newEditor: Editor | null) => {
     const extendedEmails = [
       ...emails,
-      { id: emails.length, subject: "", editor: initialEditor },
+      { id: emails.length, subject: "", editor: newEditor },
     ];
 
     setEmails(extendedEmails);
@@ -38,6 +39,9 @@ const SequenceStepsPage = () => {
       subject,
       editor: id === emails[emails.length - 1].id ? initialEditor : editor,
     }));
+
+    console.log(emails);
+    console.log(updatedEmailsEditor);
 
     setEmails(updatedEmailsEditor);
   }, [initialEditor]);

@@ -10,17 +10,17 @@ import useEditorData from "../../utils/usePageTitle/useEditorData.ts";
 import EmailEditor from "./EmailEditor.tsx";
 import { useEffect, useState } from "react";
 import { Editor } from "@tiptap/react";
+import type { EmailsRawType } from "../../types/emails.ts";
+import { useNewEmailsUpload } from "../../api/emails/queryHooks.ts";
 
 const SequenceStepsPage = () => {
   usePageTitle("Sequence steps");
 
+  const { handleNewEmailsUpload } = useNewEmailsUpload();
+
   const initialEditor = useEditorData();
 
-  //console.log(initialEditor);
-
-  //console.log(initialEditor?.getJSON());
-
-  const [emails, setEmails] = useState([
+  const [emails, setEmails] = useState<EmailsRawType[]>([
     { id: 0, subject: "", editor: initialEditor },
   ]);
 
@@ -33,15 +33,23 @@ const SequenceStepsPage = () => {
     setEmails(extendedEmails);
   };
 
+  const handleEmailsSubmit = () => {
+    const emailsToSend: { editor: any; subject: string; id: number }[] =
+      emails.map(({ id, subject, editor }) => ({
+        id,
+        subject,
+        editor: editor?.getJSON(),
+      }));
+
+    handleNewEmailsUpload({ data: emailsToSend, onSettled: () => {} });
+  };
+
   useEffect(() => {
     const updatedEmailsEditor = emails.map(({ id, subject, editor }) => ({
       id,
       subject,
       editor: id === emails[emails.length - 1].id ? initialEditor : editor,
     }));
-
-    console.log(emails);
-    console.log(updatedEmailsEditor);
 
     setEmails(updatedEmailsEditor);
   }, [initialEditor]);
@@ -67,7 +75,11 @@ const SequenceStepsPage = () => {
             Previous
           </button>
 
-          <button type={"button"} className={"bg-purple-700 text-white border"}>
+          <button
+            type={"button"}
+            className={"bg-purple-700 text-white" + " border"}
+            onClick={handleEmailsSubmit}
+          >
             Next
           </button>
         </div>

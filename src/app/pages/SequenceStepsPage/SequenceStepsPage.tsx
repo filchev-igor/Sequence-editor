@@ -13,6 +13,7 @@ import { Editor } from "@tiptap/react";
 import type { EmailsRawType } from "../../types/emails.ts";
 import { useNavigate } from "react-router-dom";
 import { PATH_NAMES } from "../../modules/router/routes.ts";
+import SequenceActionBlock from "../../components/SequenceActionBlock/SequenceActionBlock.tsx";
 
 const SequenceStepsPage = () => {
   const navigate = useNavigate();
@@ -62,31 +63,11 @@ const SequenceStepsPage = () => {
 
       <Stepper steps={sequenceStepsPageStepper} />
 
-      <div className={"grid grid-cols-2"}>
-        <div className={"grid"}>
-          <span className={"font-bold"}>Sequence steps</span>
-          <span className={"text-gray-500"}>
-            Create steps for your sequence
-          </span>
-        </div>
-
-        <div className={"text-right"}>
-          <button
-            type={"button"}
-            className={"border border-gray-200 sm:mr-2 xs: mb-2"}
-          >
-            Previous
-          </button>
-
-          <button
-            type={"button"}
-            className={"bg-purple-700 text-white" + " border"}
-            onClick={handleEmailsSubmit}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <SequenceActionBlock
+        title={"Sequence steps"}
+        subtitle={"Create steps for your sequence"}
+        onNextButtonClick={handleEmailsSubmit}
+      />
 
       <hr className={"my-4"} />
 

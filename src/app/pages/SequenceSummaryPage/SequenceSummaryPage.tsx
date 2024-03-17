@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs.tsx";
 import { SEQUENCE_BREADCRUMBS } from "../../constants/breadcrumbs.ts";
@@ -7,14 +7,21 @@ import Stepper from "../../components/Stepper/Stepper.tsx";
 import { sequenceSummaryPageStepper } from "../SequenceStepsPage/constants.ts";
 import { EmailsJsonType } from "../../types/emails.ts";
 import { useNewEmailsUpload } from "../../api/emails/queryHooks.ts";
+import SequenceActionBlock from "../../components/SequenceActionBlock/SequenceActionBlock.tsx";
+import { PATH_NAMES } from "../../modules/router/routes.ts";
 
 const SequenceSummaryPage = () => {
+  const navigate = useNavigate();
   const {
     state: { emailsToSend },
   } = useLocation();
   const { handleNewEmailsUpload } = useNewEmailsUpload();
 
   usePageTitle("Sequence summary");
+
+  const handlePreviousPageGo = () => {
+    navigate(PATH_NAMES.sequenceStepsPage, { state: { emailsToSend } });
+  };
 
   const handleEmailsSubmit = () => {
     handleNewEmailsUpload({
@@ -34,29 +41,12 @@ const SequenceSummaryPage = () => {
 
       <Stepper steps={sequenceSummaryPageStepper} />
 
-      <div className={"grid grid-cols-2"}>
-        <div className={"grid"}>
-          <span className={"font-bold"}>Sequence summary</span>
-          <span className={"text-gray-500"}>Summary of your sequence</span>
-        </div>
-
-        <div className={"text-right"}>
-          <button
-            type={"button"}
-            className={"border border-gray-200 sm:mr-2 xs: mb-2"}
-          >
-            Previous
-          </button>
-
-          <button
-            type={"button"}
-            className={"bg-purple-700 text-white" + " border"}
-            onClick={handleEmailsSubmit}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <SequenceActionBlock
+        title={"Sequence summary"}
+        subtitle={"Summary of your sequence"}
+        onPreviousButtonClick={handlePreviousPageGo}
+        onNextButtonClick={handleEmailsSubmit}
+      />
 
       <hr className={"my-4"} />
 

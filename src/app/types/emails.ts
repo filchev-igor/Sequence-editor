@@ -9,5 +9,5 @@ export type EmailsRawType = {
 export type EmailsJsonType = {
   id: number;
   subject: string;
-  editor: JSONContent;
+  editor: JSONContent | null;
 };

@@ -6,13 +6,25 @@ import PageTitle from "../../components/PageTitle/PageTitle.tsx";
 import Stepper from "../../components/Stepper/Stepper.tsx";
 import { sequenceSummaryPageStepper } from "../SequenceStepsPage/constants.ts";
 import { EmailsJsonType } from "../../types/emails.ts";
+import { useNewEmailsUpload } from "../../api/emails/queryHooks.ts";
 
 const SequenceSummaryPage = () => {
   const {
     state: { emailsToSend },
   } = useLocation();
+  const { handleNewEmailsUpload } = useNewEmailsUpload();
 
   usePageTitle("Sequence summary");
+
+  const handleEmailsSubmit = () => {
+    handleNewEmailsUpload({
+      data: emailsToSend,
+      onSettled: () => {
+        //TODO: requires additional page
+        //navigate(PATH_NAMES., { state: { emailsToSend } });
+      },
+    });
+  };
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -39,6 +51,7 @@ const SequenceSummaryPage = () => {
           <button
             type={"button"}
             className={"bg-purple-700 text-white" + " border"}
+            onClick={handleEmailsSubmit}
           >
             Next
           </button>

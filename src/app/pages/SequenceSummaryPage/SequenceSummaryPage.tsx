@@ -12,7 +12,7 @@ const SequenceSummaryPage = () => {
     state: { emailsToSend },
   } = useLocation();
 
-  usePageTitle("Sequence steps");
+  usePageTitle("Sequence summary");
 
   return (
     <div style={{ padding: "1rem" }}>

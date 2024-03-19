@@ -50,30 +50,34 @@ const SequenceSummaryPage = () => {
 
       <hr className={"my-4"} />
 
-      {emailsToSend.map(({ id, subject }: EmailsJsonType) => (
+      {emailsToSend.map(({ id, subject, editor }: EmailsJsonType) => (
         <div
           key={id}
           className={"grid gap-5 mb-6"}
-          style={{ gridTemplateColumns: "auto 1fr" }}
+          style={{ gridTemplateColumns: "280px 1fr", color: "#344054" }}
         >
-          <div>Sequence steps</div>
+          <div className={"font-bold"}>Sequence steps and details</div>
 
           <div className={"grid"}>
-            <div className={"font-bold"}>
+            <div style={{ color: "#344054" }}>
               <div>Steps - {id + 1}</div>
             </div>
 
             <div
-              className={"grid text-gray-500"}
-              style={{ gridTemplateColumns: "auto 1fr" }}
+              className={"grid"}
+              style={{ gridTemplateColumns: "auto 1fr", color: "#475467" }}
             >
               <div>Subject:&nbsp;</div>
               <div>{subject}</div>
-            </div>
 
-            <div className={"text-gray-500"}>
               <div>Content:&nbsp;</div>
-              <div>X</div>
+              <div>
+                <pre>
+                  {editor?.content?.map(({ content }) => {
+                    return content?.[0].text ?? "\n\n";
+                  })}
+                </pre>
+              </div>
             </div>
           </div>
         </div>

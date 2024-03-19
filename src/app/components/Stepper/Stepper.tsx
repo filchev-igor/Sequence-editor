@@ -10,7 +10,13 @@ const Stepper = ({ steps }: { steps: StepperProps }) => (
           key={title}
         >
           <div className="min-w-7 min-h-7 flex flex-col items-center md:w-full md:inline-flex md:flex-wrap md:flex-row text-xs align-middle">
-            <span className="size-7 flex justify-center items-center flex-shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full dark:bg-gray-700 dark:text-white">
+            <span
+              className={`size-7 flex justify-center items-center flex-shrink-0 bg-gray-100 font-medium rounded-full dark:bg-gray-700 dark:text-white ${status === StepperStatus.IN_PROGRESS || status === StepperStatus.COMPLETED ? "text-purple-700 dark:text-purple-800" : "text-gray-800 dark:text-white"}`}
+              style={{
+                border: `${status === StepperStatus.IN_PROGRESS || status === StepperStatus.COMPLETED ? "1px solid rgb(126 34 206)" : ""}`,
+                boxShadow: `${status === StepperStatus.IN_PROGRESS || status === StepperStatus.COMPLETED ? "0 0 0 2px rgb(243 244 246)" : ""}`,
+              }}
+            >
               {<StepperIcon status={status} />}
             </span>
             <div className="mt-2 w-px h-full md:mt-0 md:ms-2 md:w-full md:h-px md:flex-1 bg-gray-200 group-last:hidden dark:bg-gray-700"></div>

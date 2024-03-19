@@ -26,7 +26,8 @@ const SequenceActionBlock = ({
 
       <button
         type={"button"}
-        className={"bg-purple-700 text-white" + " border"}
+        className={"text-white border"}
+        style={{ backgroundColor: "#6E40D7" }}
         onClick={onNextButtonClick}
       >
         Next
